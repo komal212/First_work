@@ -1,0 +1,36 @@
+!
+hostname spine-01
+!
+interface Ethernet1
+  description Uplink to leaf-01
+  switchport trunk allowed vlan 10-12,20
+!
+interface Ethernet2
+  description Uplink to leaf-02
+  switchport trunk allowed vlan 10-12,20
+!
+interface Ethernet3
+  description Server A
+  switchport access vlan 10
+  channel-group 1 mode active
+!
+interface Ethernet4
+  description Server A
+  switchport access vlan 10
+  channel-group 1 mode active
+!
+interface Port-Channel1
+  description LAG to Server A
+!
+vlan 10
+  name USERS
+!
+vlan 20
+  name STORAGE
+!
+router bgp 65001
+  neighbor 10.0.0.2 remote-as 65002
+  neighbor 10.0.0.2 description leaf-01
+  neighbor 10.0.0.3 remote-as 65003
+  neighbor 10.0.0.3 description leaf-02
+!
