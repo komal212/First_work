@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<minigraph>
+  <metadata>
+    <hostname>spine-01</hostname>
+    <role>SUP</role>
+    <local_asn>65001</local_asn>
+  </metadata>
+  <ports>
+    <port>
+      <name>Ethernet1</name>
+      <description>Uplink to leaf-01</description>
+      <trunk_vlans>10,11,12,20</trunk_vlans>
+    </port>
+    <port>
+      <name>Ethernet2</name>
+      <description>Uplink to leaf-02</description>
+      <trunk_vlans>10,11,12,20</trunk_vlans>
+    </port>
+    <port>
+      <name>Ethernet3</name>
+      <description>Server A</description>
+      <access_vlan>10</access_vlan>
+      <portchannel>Port-Channel1</portchannel>
+    </port>
+    <port>
+      <name>Ethernet4</name>
+      <description>Server A</description>
+      <access_vlan>10</access_vlan>
+      <portchannel>Port-Channel1</portchannel>
+    </port>
+    <port>
+      <name>Port-Channel1</name>
+      <description>LAG to Server A</description>
+    </port>
+  </ports>
+  <portchannels>
+    <portchannel>
+      <name>Port-Channel1</name>
+      <access_vlan>10</access_vlan>
+      <members>Ethernet3,Ethernet4</members>
+    </portchannel>
+  </portchannels>
+  <vlans>
+    <vlan>
+      <vlanid>10</vlanid>
+      <name>USERS</name>
+      <members>Ethernet1,Ethernet2,Ethernet3,Ethernet4,Port-Channel1</members>
+    </vlan>
+    <vlan>
+      <vlanid>11</vlanid>
+      <members>Ethernet1,Ethernet2</members>
+    </vlan>
+    <vlan>
+      <vlanid>12</vlanid>
+      <members>Ethernet1,Ethernet2</members>
+    </vlan>
+    <vlan>
+      <vlanid>20</vlanid>
+      <name>STORAGE</name>
+      <members>Ethernet1,Ethernet2</members>
+    </vlan>
+  </vlans>
+  <bgp>
+    <asn>65001</asn>
+    <neighbors>
+      <neighbor>
+        <address>10.0.0.2</address>
+        <remote_asn>65002</remote_asn>
+        <description>leaf-01</description>
+      </neighbor>
+      <neighbor>
+        <address>10.0.0.3</address>
+        <remote_asn>65003</remote_asn>
+        <description>leaf-02</description>
+      </neighbor>
+    </neighbors>
+  </bgp>
+</minigraph>
